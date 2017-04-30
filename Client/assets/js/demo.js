@@ -124,20 +124,25 @@ demo = {
         var marker = new google.maps.Marker({
             position: myLatlng,
             title:"Hello World!"
-
-
         });//test
         var marka = new google.maps.Marker({
             position:new google.maps.LatLng(-33.497189,-70.615226),
             title:"Hzdfdfgsd!"
+        });
 
-
+        $.get('http://52.67.200.131:8080/api/emergencys', function(data){
+                for (var i = 0; i < data.length; i++) {
+                    var marka = new google.maps.Marker({
+                        position: new google.maps.LatLng(data[i].latitude, data[i].longitude),
+                        title:"Hello World!"
+                    });//test
+                    marka.setMap(map);
+                }
         });
 
         // To add the marker to the map, call setMap();
         marker.setMap(map);
-      //test
-        marka.setMap(map);
+
     },
 
 	showNotification: function(from, align){
