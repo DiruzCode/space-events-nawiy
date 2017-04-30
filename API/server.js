@@ -7,9 +7,10 @@ var bodyParser = require('body-parser');
 var app        = express();
 var morgan     = require('morgan');
 var env        = require('dotenv').config();
+var cors 		= require('cors');
 // configure app
-
-
+//
+app.use(cors());
 app.use(morgan('dev')); // log requests to the console
 
 // configure body parser
@@ -22,46 +23,13 @@ mongoose.connect('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+proces
 var Emergency     = require('./models/Emergency');
 
 
+//init Express Router
 var router = express.Router();
-app.use(function (req, res, next) {
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://52.67.200.131/');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', false);
-
-    // Pass to next layer of middleware
-    next();
+//default/test route
+router.use(function(req, res, next) {
+	next();
 });
-
-router.use(function (req, res, next) {
-
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://52.67.200.131/');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', false);
-
-    // Pass to next layer of middleware
-    next();
-});
-
-
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
 	res.json({ message: 'Yeah!!! We Are ON' });
