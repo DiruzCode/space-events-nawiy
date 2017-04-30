@@ -10,7 +10,11 @@ var env        = require('dotenv').config();
 var cors 		= require('cors');
 // configure app
 //
-app.use(cors());
+app.use(function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', "*");
+	res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Headers', 'Content-Type'); next();
+});
 app.use(morgan('dev')); // log requests to the console
 
 // configure body parser
@@ -18,7 +22,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port     = process.env.PORT || 8080; // set our port
-app.options('*', cors());
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+process.env.DB_HOST); // connect to our database
 var Emergency     = require('./models/Emergency');
