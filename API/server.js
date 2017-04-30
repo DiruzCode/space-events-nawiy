@@ -11,9 +11,11 @@ var cors 		= require('cors');
 // configure app
 //
 app.use(function(req, res, next) {
-	res.header('Access-Control-Allow-Origin', "*");
-	res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTION');
-	res.header('Access-Control-Allow-Headers', 'Content-Type'); next();
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        res.header("Access-Control-Allow-Headers", "Content-Type");
+        res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+        next();
 });
 app.use(morgan('dev')); // log requests to the console
 
@@ -32,13 +34,12 @@ var router = express.Router();
 
 //default/test route
 router.use(function(req, res, next) {
-	res.header('Access-Control-Allow-Origin', "*");
-	res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTION');
-	res.header('Access-Control-Allow-Headers', 'Content-Type'); next();
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        res.header("Access-Control-Allow-Headers", "Content-Type");
+        res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+        next();
 });
-
-router.use(cors());
-
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
