@@ -8,21 +8,8 @@ var app        = express();
 var morgan     = require('morgan');
 var env        = require('dotenv').config();
 // configure app
-const cors = require('cors')
-const corsOptions = {
-  origin: 'http://52.67.200.131:2121',
-  optionsSuccessStatus: 200
-};
 
-app.use(cors(corsOptions));
 
-app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "X-Requested-With");
-        res.header("Access-Control-Allow-Headers", "Content-Type");
-        res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-        next();
-});
 app.use(morgan('dev')); // log requests to the console
 
 // configure body parser
@@ -35,11 +22,21 @@ mongoose.connect('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+proces
 var Emergency     = require('./models/Emergency');
 
 
-//init Express Router
 var router = express.Router();
 
-//default/test route
-router.use(cors(corsOptions));
+var allowCrossDomain = function(req, res, next) {
+    if ('OPTIONS' == req.method) {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+      res.send(200);
+    }
+    else {
+      next();
+    }
+};
+
+router.use(allowCrossDomain);
 
 router.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
