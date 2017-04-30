@@ -12,7 +12,7 @@ var cors 		= require('cors');
 //
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', "*");
-	res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTION');
 	res.header('Access-Control-Allow-Headers', 'Content-Type'); next();
 });
 app.use(morgan('dev')); // log requests to the console
@@ -33,9 +33,13 @@ var router = express.Router();
 //default/test route
 router.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', "*");
-	res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTION');
 	res.header('Access-Control-Allow-Headers', 'Content-Type'); next();
 });
+
+router.use(cors());
+
+
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
 	res.json({ message: 'Yeah!!! We Are ON' });
