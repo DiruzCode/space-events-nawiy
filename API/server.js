@@ -10,7 +10,8 @@ var env        = require('dotenv').config();
 // configure app
 const cors = require('cors')
 const corsOptions = {
-  origin: 'http://52.67.200.131:2121/'
+  origin: 'http://52.67.200.131:2121',
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
