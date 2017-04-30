@@ -7,7 +7,10 @@ var bodyParser = require('body-parser');
 var app        = express();
 var morgan     = require('morgan');
 var env        = require('dotenv').config();
+var cors = require('cors');
 // configure app
+//
+app.use(cors()); 
 app.use(morgan('dev')); // log requests to the console
 
 // configure body parser
