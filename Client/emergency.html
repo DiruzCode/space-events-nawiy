@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Accessing arguments in UI events</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
+    	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+        <meta name="viewport" content="width=device-width" />
+
+
+        <!-- Bootstrap core CSS     -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+
+        <!-- Animation library for notifications   -->
+        <link href="assets/css/animate.min.css" rel="stylesheet"/>
+
+        <!--  Light Bootstrap Table core CSS    -->
+        <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+
+
+        <!--  CSS for Demo Purpose, don't include it in your project     -->
+        <link href="assets/css/demo.css" rel="stylesheet" />
+
+
+        <!--     Fonts and icons     -->
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+        <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+  </head>
+  <body>
+    <div class="wrapper">
+        <div class="sidebar" data-color="green" data-image="assets/img/sidebar-5.jpg">
+
+        <!--
+
+            Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+            Tip 2: you can also add an image using data-image tag
+
+        -->
+
+          <div class="sidebar-wrapper">
+                <div class="logo">
+                    <li class="simple-text">
+                        Ñawiy
+                    </li>
+                </div>
+
+                <ul class="nav">
+                  <li>
+                      <a href="maps.html">
+                          <i class="pe-7s-star"></i>
+                          <p><h5>Instrucciones de uso:</h5></p>
+                          <br><br>
+                          <ul>
+                            Por favor permitir detectar tu ubicación
+                          </ul>
+                          <br><br>
+                          <ul>
+                            Seleccionar el lugar de la emergencia
+                          </ul>
+                          <ul>
+                            Confirmar que la ubicación sea la correcta
+                          </ul>
+                          <br><br>
+                          <ul>
+                            Haz click en enviar
+                          </ul>
+
+                      </a>
+                  </li>
+
+                </ul>
+                <ul class="nav">
+                  <li>
+                      <a href="index.html" >
+
+                          <button type="button" name="button" class="btn btn-default btn-block button-background" href="javascript:void(0)" onclick="send_post()" >
+                          Enviar</button></li>
+
+                          <br><br>
+
+
+                      </a>
+                  </li>
+
+                </ul>
+                <ul class="nav">
+                  <li>
+
+
+
+                </ul>
+          </div>
+        </div>
+
+      <div class="main-panel">
+      <nav class="navbar navbar-default navbar-fixed">
+              <div class="container-fluid">
+                  <div class="navbar-header">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                          <span class="sr-only">Toggle navigation</span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                      </button>
+                      <a class="navbar-brand" href="#">Maps</a>
+                  </div>
+                  <div class="collapse navbar-collapse">
+                      <ul class="nav navbar-nav navbar-left">
+                          <li>
+
+                          </li>
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                      <i class="fa fa-globe"></i>
+                                      <b class="caret hidden-sm hidden-xs"></b>
+                                      <span class="notification hidden-sm hidden-xs">5</span>
+                    <p class="hidden-lg hidden-md">
+                      5 Notifications
+                      <b class="caret"></b>
+                    </p>
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">Notification 1</a></li>
+                                  <li><a href="#">Notification 2</a></li>
+                                  <li><a href="#">Notification 3</a></li>
+                                  <li><a href="#">Notification 4</a></li>
+                                  <li><a href="#">Another notification</a></li>
+                                </ul>
+                          </li>
+                          <li>
+
+                          </li>
+                      </ul>
+
+                      <ul class="nav navbar-nav navbar-right">
+                          <li>
+
+                          </li>
+
+                          <li>
+                              <a href="index.html">
+                                  <p>Terminar Emergencia</p>
+                              </a>
+                          </li>
+              <li class="separator hidden-lg hidden-md"></li>
+                      </ul>
+                  </div>
+              </div>
+          </nav>
+
+          <div id="map"></div>
+
+      </div>
+    <script>
+      var markers;
+      var one_click = 0;
+      function initMap() {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: {lat: position.coords.latitude, lng: position.coords.longitude }
+          });
+
+          map.addListener('click', function(e) {
+              if(markers){
+                markers.setMap(null);
+              }
+              placeMarkerAndPanTo(e.latLng, map);
+              //el post mandará  esta wea :DDD
+          });
+        }, function() {
+              alert("Por favor, recargue la página y active la detección de ubicación ");
+        });
+      }
+
+      function send_post(){
+
+          if (!confirm("¿Está seguro que es esa la posición que desea ingresar?")) {
+              markers.setMap(null);
+              return false;
+          };
+          console.log("se eviará un post");
+          var unix = +new Date();
+          var time = Date.now || function() {
+            return +new Date;
+          };
+          time();
+          console.log(time());
+          //alert
+      }
+
+      function placeMarkerAndPanTo(latLng, map) {
+        var marker = new google.maps.Marker({
+          position: latLng,
+          map: map
+
+        });
+        markers = marker;
+        map.panTo(latLng);
+
+
+
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWzH2mZ8VtRPodyliqcF0Y79P_cnZaKG8&callback=initMap">
+    </script>
+  </body>
+</html>

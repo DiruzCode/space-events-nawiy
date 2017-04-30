@@ -1,0 +1,3 @@
+Google Maps Javascript API
+Para usar esta clave en tu aplicación, transfiérela como un parámetro key=API_KEY
+AIzaSyAWzH2mZ8VtRPodyliqcF0Y79P_cnZaKG8
