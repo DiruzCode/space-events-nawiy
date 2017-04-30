@@ -35,7 +35,7 @@ var allowCrossDomain = function(req, res, next) {
       next();
     }
 };
-
+app.use(allowCrossDomain);
 router.use(allowCrossDomain);
 
 router.use(function(req, res, next) {
