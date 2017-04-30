@@ -7,9 +7,14 @@ var bodyParser = require('body-parser');
 var app        = express();
 var morgan     = require('morgan');
 var env        = require('dotenv').config();
-var cors 		= require('cors');
 // configure app
-//
+const cors = require('cors')
+const corsOptions = {
+  origin: 'http://52.67.200.131:2121/'
+};
+
+app.use(cors(corsOptions));
+
 app.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -33,6 +38,8 @@ var Emergency     = require('./models/Emergency');
 var router = express.Router();
 
 //default/test route
+router.use(cors(corsOptions));
+
 router.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "X-Requested-With");
