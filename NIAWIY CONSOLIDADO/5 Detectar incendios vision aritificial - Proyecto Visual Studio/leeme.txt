@@ -1,0 +1,9 @@
+1.- Desde cmd, acceder a carpeta que ejecuta el arichov de vision artificial:
+
+Ejemplo:
+
+cd c:\users\pablo-ar\documents\visual studio 2012\Projects\Niawuy\x64\Debug\
+
+2.- Ejecutar archivo por su nombre + nombre archivo a analizar
+
+Niawuy bosqueincendio.jpg
