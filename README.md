@@ -57,6 +57,14 @@ cd space-events-nawiy/API
 ```bash
 $ npm install
 ```
+
+Create File .env 
+
+DB_HOST=
+DB_USER=
+DB_PASS=
+
+
 ```bash
 $ forever start server.js
 ```
@@ -68,6 +76,15 @@ cd space-events-nawiy/FacebookBot
 ```bash
 $ npm install
 ```
+
+Create File .env 
+
+PAGE_ACCESS_TOKEN=
+DB_HOST=
+DB_USER=
+DB_PASS=
+
+
 ```bash
 $ forever start server.js
 ```
